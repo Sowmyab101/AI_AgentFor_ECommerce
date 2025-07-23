@@ -1,7 +1,7 @@
 import pandas as pd
 import sqlite3
 
-# Load your actual datasets
+# Loading the actual datasets
 ad_sales = pd.read_csv("data/ad_sales.csv")
 total_sales = pd.read_csv("data/total_sales.csv")
 eligibility = pd.read_csv("data/eligibility.csv")
