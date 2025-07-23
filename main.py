@@ -5,7 +5,7 @@ import streamlit as st
 from dotenv import load_dotenv
 import google.generativeai as genai
 
-# Load environment variables from .env
+# Loading environment variables from .env
 load_dotenv()
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 model = genai.GenerativeModel("gemini-1.5-flash")
@@ -24,7 +24,7 @@ Only return a valid SQLite SQL query. Do not explain, format, or comment.
 Question: {question}
 """
 
-# Function: Get SQL from Gemini
+# Function: To Get SQL from Gemini
 def question_to_sql(question):
     prompt = PROMPT_TEMPLATE.format(question=question)
     try:
@@ -33,7 +33,7 @@ def question_to_sql(question):
     except Exception as e:
         return f"ERROR: {str(e)}"
 
-# Function: Run SQL on SQLite
+# Function: To Run SQL on SQLite
 def run_sql(sql_query):
     try:
         conn = sqlite3.connect("ecommerce1.db")
@@ -43,7 +43,7 @@ def run_sql(sql_query):
     except Exception as e:
         return f"SQL ERROR: {str(e)}"
 
-# Streamlit App
+# Streamlit 
 st.set_page_config("E-commerce AI Agent", layout="centered")
 st.title("🛒 E-commerce AI Agent (Gemini + SQLite)")
 
@@ -61,10 +61,10 @@ if st.button("Ask Gemini") and question:
             result = run_sql(sql)
 
             if isinstance(result, pd.DataFrame) and not result.empty:
-                # Step 3: Convert table to string
+                # Step 3: Converting table to string
                 table_text = result.to_string(index=False)
 
-                # Step 4: Ask Gemini to explain result in plain English
+                # Step 4: Asking Gemini to explain result in plain English
                 explain_prompt = f"Explain this SQL result in a clear, human-readable sentence:\n\n{table_text}"
 
                 try:
@@ -72,7 +72,6 @@ if st.button("Ask Gemini") and question:
                 except Exception as e:
                     explanation = f"ERROR: {e}"
 
-                # ✅ FINAL ANSWER ONLY — No SQL, No Table
                 st.subheader("🧠 Final Answer")
                 st.success(explanation)
             else:
